@@ -31,23 +31,32 @@
 </script>
 
 <template>
-    <table class="table">
-        <thead class="thead-light">
-          <tr>
-            <th>{{headers.number}}</th>
-            <th>{{headers.name}}</th>
-            <th>{{headers.status}}</th>
-            <th>{{headers.managed}}</th>
-            <th>{{headers.actions}}</th>
-          </tr>
-        </thead>
-        <tbody>
-            <tr v-for="(sw, index) in switches" :key="index">
-                <SwitchItem 
-                    :sw=sw
-                    @change-inhibition="changeInhibition(sw)"
-                    @change-state="changeState(sw)" />
-            </tr>
-        </tbody>
-      </table>
+    <div class="mdc-data-table">
+        <div class="mdc-data-table__table-container">
+            <table class="mdc-data-table__table" aria-label="Dessert calories">
+                <thead>
+                    <tr class="mdc-data-table__header-row">
+                        <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader" scope="col">{{headers.number}}</th>
+                        <th class="mdc-data-table__header-cell" role="columnheader" scope="col">{{headers.name}}</th>
+                        <th class="mdc-data-table__header-cell" role="columnheader" scope="col">{{headers.status}}</th>
+                        <th class="mdc-data-table__header-cell" role="columnheader" scope="col">{{headers.managed}}</th>
+                        <th class="mdc-data-table__header-cell" role="columnheader" scope="col">{{headers.actions}}</th>
+                    </tr>
+                </thead>
+                <tbody class="mdc-data-table__content">
+
+                    <tr
+                        class="mdc-data-table__row"
+                        v-for="(sw, index) in switches" :key="index">
+                        <SwitchItem
+                            :sw=sw
+                            @change-inhibition="changeInhibition(sw)"
+                            @change-state="changeState(sw)" />
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
 </template>

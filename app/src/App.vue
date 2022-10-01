@@ -14,12 +14,12 @@ import HelloWorld from "./components/HelloWorld.vue";
     />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <!--<HelloWorld msg="You did it!" />
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
-      </nav>
+      </nav>-->
     </div>
   </header>
 
@@ -36,7 +36,7 @@ header {
   display: block;
   margin: 0 auto 2rem;
 }
-
+/*
 nav {
   width: 100%;
   font-size: 12px;
@@ -61,7 +61,7 @@ nav a {
 nav a:first-of-type {
   border: 0;
 }
-
+*/
 @media (min-width: 1024px) {
   header {
     display: flex;
@@ -78,7 +78,7 @@ nav a:first-of-type {
     place-items: flex-start;
     flex-wrap: wrap;
   }
-
+/*
   nav {
     text-align: left;
     margin-left: -1rem;
@@ -87,5 +87,6 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
+  */
 }
 </style>
