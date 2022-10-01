@@ -1,5 +1,6 @@
 <script setup lang="ts">
     //import { reactive } from 'vue'
+    import FreezabeInputItem from "./FreezabeInputItem.vue";
     import type Switch from '@/types/Switch'
     import Toggle from '@vueform/toggle'
     import { ref } from 'vue'
@@ -8,7 +9,8 @@
     const props = defineProps<{
         sw: Switch
     }>()
-    const alias = ref(props.sw.index)
+    let alias = ref(String(props.sw.index))
+    //const alias = reactive([{text: String(props.sw.index)}])
 
     const emit = defineEmits<{
         (e: 'change-inhibition', value: boolean): void
@@ -32,19 +34,19 @@
 
 <template>
     <td>{{props.sw.index}}</td>
-    <td> <input v-model="alias"/> </td>
+    <td> <FreezabeInputItem v-model:text="alias"/> </td>
     <td>
         <i class="fas fa-lightbulb" :class="[props.sw.state === 'on' ? 'on' : '']"></i>
     </td>
     <td>
-        <Toggle 
+        <Toggle
             v-model="props.sw.inhibited"
             @change="onChangeInhibition(sw)"
             on-label="on"
             off-label="Off" />
     </td>
     <td>
-        <Toggle 
+        <Toggle
             v-model="props.sw.state"
             :disabled="!props.sw.inhibited"
             @change="onChangeState(sw)"
