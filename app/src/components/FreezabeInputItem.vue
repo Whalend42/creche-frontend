@@ -20,14 +20,28 @@
 </script>
 
 <template>
-    <input
-        id="savableText"
+    <!--<input
+        class=""
         v-if="state === 'editable'" v-model="text"
         @keyup.enter="saved"
         @blur="saved"
-        @focusout="saved"/>
+        @focusout="saved"/>-->
+
+    <label
+        class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label"
+        v-if="state === 'editable'"
+        @keyup.enter="saved"
+        @blur="saved"
+        @focusout="saved" >
+        <span class="mdc-notched-outline">
+            <span class="mdc-notched-outline__leading"></span>
+            <span class="mdc-notched-outline__trailing"></span>
+        </span>
+        <input class="mdc-text-field__input" type="text" aria-label="Label" v-model="text">
+    </label>
 
     <div
+        class="adjusted-height"
         v-if="state === 'saved'"
         @click="editable"
         @mouseover="showEditable = true"
@@ -42,5 +56,10 @@
 <style scoped>
     .clickable {
         cursor: pointer;
+    }
+    .adjusted-height {
+        height: 56px;
+        line-height: 56px;
+        vertical-align: middle;
     }
 </style>
