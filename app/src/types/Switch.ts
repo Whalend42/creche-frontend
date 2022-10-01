@@ -1,5 +1,5 @@
 export default interface Switch {
-    alias: string,
+    index: Number,
     state: string,
     inhibited: boolean
 }

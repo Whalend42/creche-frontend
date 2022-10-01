@@ -1,18 +1,19 @@
 <script setup lang="ts">
     import SwitchItem from "./SwitchItem.vue";
     import type Switch from '@/types/Switch';
-    const switches = [
+    import { ref } from 'vue'
+    const switches = ref([
         {
-            alias: "salut",
+            index: 0,
             state: "on",
             inhibited: false
         } as Switch,
         {
-            alias: "hello",
+            index: 1,
             state: "off",
             inhibited: true
-        } as Switch,
-    ]
+        } as Switch
+    ])
     const headers = {
         number: '#',
         name: 'Nom',
@@ -20,7 +21,13 @@
         managed: 'Mode manuel',
         actions: 'Actions'
     }
-    const index = 0
+
+    const changeInhibition = (sw: Switch) => {
+        console.log("in switches, inhibition: "+sw.inhibited)
+    }
+    const changeState = (sw: Switch) => {
+        console.log("in switches, state: "+sw.state)
+    }
 </script>
 
 <template>
@@ -36,7 +43,10 @@
         </thead>
         <tbody>
             <tr v-for="(sw, index) in switches" :key="index">
-                <SwitchItem :sw=sw :index=index />
+                <SwitchItem 
+                    :sw=sw
+                    @change-inhibition="changeInhibition(sw)"
+                    @change-state="changeState(sw)" />
             </tr>
         </tbody>
       </table>
