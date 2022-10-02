@@ -2,19 +2,21 @@
     import SwitchItem from "./SwitchItem.vue";
     import type Switch from '@/types/Switch';
     import { reactive, ref, onMounted } from 'vue'
+
+    // some constants
+
     const defaultSwitches = [
-            {
-                index: 0,
-                isOn: true,
-                isInhibited: false
-            } as Switch,
-            {
-                index: 1,
-                isOn: false,
-                isInhibited: true
-            } as Switch
-        ]
-    const switches = ref(defaultSwitches)
+        {
+            index: 0,
+            isOn: true,
+            isInhibited: false
+        } as Switch,
+        {
+            index: 1,
+            isOn: false,
+            isInhibited: true
+        } as Switch
+    ]
     const headers = {
         number: '#',
         name: 'Nom',
@@ -22,6 +24,13 @@
         managed: 'Mode manuel',
         actions: 'Actions'
     }
+
+    // some reactive variable
+
+    const switches = ref(defaultSwitches)
+
+    // some functions
+
     function setDefaultSwitches() {
         switches.value = defaultSwitches
     }
@@ -29,6 +38,15 @@
       const resp = JSON.parse(data)
       switches.value = resp
     }
+    function changeInhibition(sw: Switch) {
+        console.log("in switches, inhibition: "+sw.isInhibited)
+    }
+    function changeState (sw: Switch) {
+        console.log("in switches, state: "+sw.isOn)
+    }
+
+    // Connection to websocket api
+
     const connection = new WebSocket('ws://localhost:9999')
     connection.onmessage = function(event) {
       console.log("message");
@@ -36,7 +54,6 @@
       setSwitchesFromData(event.data)
     }
     connection.onopen = function(event) {
-      //console.log(event)
       console.log("Successfully connected to the echo websocket server...")
       const cmd = {
         action: "status"
@@ -48,13 +65,6 @@
     }
     connection.onerror = function(event) {
         setDefaultSwitches()
-    }
-
-    function changeInhibition(sw: Switch) {
-        console.log("in switches, inhibition: "+sw.isInhibited)
-    }
-    function changeState (sw: Switch) {
-        console.log("in switches, state: "+sw.isOn)
     }
 </script>
 
@@ -86,5 +96,18 @@
         </div>
     </div>
 
+    <!-- <aside class="mdc-snackbar">
+        <div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
+            <div class="mdc-snackbar__label" aria-atomic="false">
+                Can't send photo. Retry in 5 seconds.
+            </div>
+            <div class="mdc-snackbar__actions" aria-atomic="true">
+                <button type="button" class="mdc-button mdc-snackbar__action">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label">Retry</span>
+                </button>
+            </div>
+        </div>
+    </aside> -->
 
 </template>
