@@ -1,19 +1,20 @@
 <script setup lang="ts">
     import SwitchItem from "./SwitchItem.vue";
     import type Switch from '@/types/Switch';
-    import { ref } from 'vue'
-    const switches = ref([
-        {
-            index: 0,
-            state: "on",
-            inhibited: false
-        } as Switch,
-        {
-            index: 1,
-            state: "off",
-            inhibited: true
-        } as Switch
-    ])
+    import { reactive, ref, onMounted } from 'vue'
+    const defaultSwitches = [
+            {
+                index: 0,
+                isOn: true,
+                isInhibited: false
+            } as Switch,
+            {
+                index: 1,
+                isOn: false,
+                isInhibited: true
+            } as Switch
+        ]
+    const switches = ref(defaultSwitches)
     const headers = {
         number: '#',
         name: 'Nom',
@@ -21,12 +22,39 @@
         managed: 'Mode manuel',
         actions: 'Actions'
     }
-
-    const changeInhibition = (sw: Switch) => {
-        console.log("in switches, inhibition: "+sw.inhibited)
+    function setDefaultSwitches() {
+        switches.value = defaultSwitches
     }
-    const changeState = (sw: Switch) => {
-        console.log("in switches, state: "+sw.state)
+    function setSwitchesFromData(data: string) {
+      const resp = JSON.parse(data)
+      switches.value = resp
+    }
+    const connection = new WebSocket('ws://localhost:9999')
+    connection.onmessage = function(event) {
+      console.log("message");
+      console.log(event);
+      setSwitchesFromData(event.data)
+    }
+    connection.onopen = function(event) {
+      //console.log(event)
+      console.log("Successfully connected to the echo websocket server...")
+      const cmd = {
+        action: "status"
+      }
+      connection.send(JSON.stringify(cmd));
+    }
+    connection.onclose = function(event) {
+        setDefaultSwitches()
+    }
+    connection.onerror = function(event) {
+        setDefaultSwitches()
+    }
+
+    function changeInhibition(sw: Switch) {
+        console.log("in switches, inhibition: "+sw.isInhibited)
+    }
+    function changeState (sw: Switch) {
+        console.log("in switches, state: "+sw.isOn)
     }
 </script>
 
