@@ -13,20 +13,20 @@
     //const alias = reactive([{text: String(props.sw.index)}])
 
     const emit = defineEmits<{
-        (e: 'change-inhibition', value: boolean): void
-        (e: 'change-state', value: string): void
+        (e: 'change-inhibition', value: Switch): void
+        (e: 'change-state', value: Switch): void
     }>()
 
     const onChangeInhibition = (sw: Switch) => {
         console.log("in switch, inhibition: "+sw.isInhibited)
-        emit('change-inhibition', !sw.isInhibited)
+        emit('change-inhibition', sw)
     }
 
     const onChangeState = (sw: Switch) => {
-        console.log("in switch, state: "+sw.isInhibited)
+        console.log("in switch, state: "+sw.isOn)
         // user can change the value of a switch only if it is "inhibited". i.e. if the automation cannot modify it
         if (sw.isInhibited) {
-            emit('change-state', sw.isOn ? "on" : "off")
+            emit('change-state', sw)
         }
     }
 </script>
