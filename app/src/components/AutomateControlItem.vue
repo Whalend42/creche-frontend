@@ -10,7 +10,7 @@
         } as AutomateStatus
     )
 
-    const toggle = ref(null)
+    const toggle = reactive({value: null})
 
     const isPlayable = computed(() => {
         return (
@@ -110,7 +110,8 @@
         <v-col cols="12">
         Currently playing: {{automateStatus.track}}<br/>
         timer: {{automateStatus.time}}
-        <pre class="pt-2">{{ automateStatus.lastAction }}</pre>
+        <pre class="pt-2">last action: {{ automateStatus.lastAction }}</pre>
+        <pre class="pt-2">toggle: {{ toggle.value }}</pre>
         <div class="d-flex align-center flex-column pa-6">
         </div>
         </v-col>
@@ -118,8 +119,9 @@
     <v-row justify="center">
         <v-col cols="4">
             <v-btn-toggle
-                v-model="toggle"
+                v-model="toggle.value"
                 variant="outlined"
+                mandatory
                 divided>
                 <v-btn
                     :disabled="!isPlayable"
@@ -145,3 +147,10 @@
         </v-col>
     </v-row>
 </template>
+
+<style>
+    /* small enphasis when button disabled but active */
+    button:disabled.v-btn--active {
+        background-color: #BDBDBD;
+    }
+</style>
