@@ -45,9 +45,7 @@ function changeTheme() {
       >Toggle Theme</v-btn>
     </v-app-bar>
     <v-main>
-        <v-container>
-            <RouterView />
-        </v-container>
+        <RouterView />
     </v-main>
   </v-app>
 

@@ -21,6 +21,7 @@
 
     const switches = ref(defaultSwitches)
     const isConnected = ref(false)
+    const automateStatus = ref(null)
 
     // some functions
 
@@ -83,18 +84,63 @@
 
 <template>
 
-<v-alert
-    v-if="!isConnected"
-    icon="mdi-flash"
-    title="Hors ligne"
-    type="error">
-    Impossible d'établire la connexion avec le serveur
-</v-alert>
+<v-container>
+    <v-row>
+        <v-col cols="12">
+            <v-alert
+                v-if="!isConnected"
+                icon="mdi-flash"
+                title="Hors ligne"
+                type="error">
+                Impossible d'établire la connexion avec le serveur
+            </v-alert>
+        </v-col>
+    </v-row>
 
-<v-card height="50px"></v-card>
+    <v-row>
+        <v-col cols="12">
 
-<SwitchesItem
-    :switches=switches
-    @change-inhibition="onChangeInhibition"
-    @change-state="onChangeState" />
+            <v-card
+                title="Automate"
+                subtitle="Pour charger et jouer des partitions"
+                variant="tonal">
+                <v-card-item>
+                    Currently playing: file1.txt<br/>
+                    timer: 02:10
+                </v-card-item>
+                <pre class="pt-2">{{ automateStatus }}</pre>
+                <div class="d-flex align-center flex-column pa-6">
+                    <v-btn-toggle
+                            v-model="automateStatus"
+                            variant="outlined"
+                            divided>
+                            <v-btn icon="mdi-play" value="play"></v-btn>
+                            <v-btn icon="mdi-pause" value="pause"></v-btn>
+                            <v-btn icon="mdi-stop" value="stop"></v-btn>
+                            <v-btn icon="mdi-eject" value="eject"></v-btn>
+                        </v-btn-toggle>
+                </div>
+            </v-card>
+        </v-col>
+    </v-row>
+
+    <v-row>
+        <v-col cols="12">
+
+            <v-card
+                title="Etat et controle de la crèche"
+                subtitle="Pour voir le status de la crèche et controller manuellement les interupteurs"
+                variant="tonal">
+                <v-card-item>
+                    <SwitchesItem
+                        :switches=switches
+                        @change-inhibition="onChangeInhibition"
+                        @change-state="onChangeState" />
+                </v-card-item>
+            </v-card>
+
+        </v-col>
+    </v-row>
+</v-container>
+
 </template>
