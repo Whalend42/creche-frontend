@@ -4,10 +4,10 @@ import HelloWorld from "./components/HelloWorld.vue";
 
 import { ref } from 'vue'
 
-const theme = ref('light')
+const theme = ref('customLightTheme')
 
 function changeTheme() {
-  theme.value = theme.value === 'light' ? 'dark' : 'light'
+  theme.value = theme.value === 'customLightTheme' ? 'customDarkTheme' : 'customLightTheme'
 }
 
 </script>
