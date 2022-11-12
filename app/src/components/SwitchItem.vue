@@ -2,14 +2,17 @@
     //import { reactive } from 'vue'
     import FreezabeInputItem from "./FreezabeInputItem.vue";
     import type Switch from '@/types/Switch'
-    import { ref } from 'vue'
+    import { ref, computed } from 'vue'
     //const state = reactive({value: true})
 
     const props = defineProps<{
         sw: Switch
     }>()
-    let alias = ref(String(props.sw.index))
-    //const alias = reactive([{text: String(props.sw.index)}])
+    let label = ref(String(props.sw.index))
+
+    const lightBubleColor = computed(() => {
+        return props.sw.isOn ? 'yellow-accent-2' : 'grey-lighten-1'
+    })
 
     const emit = defineEmits<{
         (e: 'change-inhibition', value: Switch): void
@@ -32,9 +35,21 @@
 
 <template>
     <td>{{props.sw.index}}</td>
-    <td> <FreezabeInputItem v-model:text="alias"/> </td>
     <td>
-        <i class="fas fa-lightbulb" :class="{on: props.sw.isOn}"></i>
+        <FreezabeInputItem v-model:text="label"/>
+    </td>
+    <td>
+        <v-btn
+            variant="outlined"
+            size="large"
+            icon
+            color="grey-lighten-1">
+            <v-icon
+                size="x-large"
+                icon="mdi-lightbulb"
+                :color="lightBubleColor">
+            </v-icon>
+        </v-btn>
     </td>
     <td>
         <v-switch
@@ -58,14 +73,4 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-    .fas.fa-lightbulb {
-      font-size: 25px;
-      color: lightblue;
-    }
-    .fas.fa-lightbulb.on {
-      color: yellow;
-    }
-    .centered {
-        text-align: center;
-    }
 </style>
