@@ -1,9 +1,19 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
 import HelloWorld from "./components/HelloWorld.vue";
+
+import { ref } from 'vue'
+
+const theme = ref('light')
+
+function changeTheme() {
+  theme.value = theme.value === 'light' ? 'dark' : 'light'
+}
+
 </script>
 
 <template>
+  <!--
   <header>
     <img
       alt="Vue logo"
@@ -14,19 +24,34 @@ import HelloWorld from "./components/HelloWorld.vue";
     />
 
     <div class="wrapper">
-      <!--<HelloWorld msg="You did it!" />
+      <HelloWorld msg="You did it!" />
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
-      </nav>-->
+      </nav>
     </div>
   </header>
+-->
 
-  <RouterView />
+  <v-app>
+    <v-app-bar
+      title="Gestion de la crèche">
+      <v-spacer></v-spacer>
+      <v-btn
+        :prepend-icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
+        @click="changeTheme"
+      >Toggle Theme</v-btn>
+    </v-app-bar>
+    <v-main>
+      <RouterView />
+    </v-main>
+  </v-app>
+
 </template>
 
 <style scoped>
+/*
 header {
   line-height: 1.5;
   max-height: 100vh;
@@ -36,7 +61,7 @@ header {
   display: block;
   margin: 0 auto 2rem;
 }
-/*
+
 nav {
   width: 100%;
   font-size: 12px;
@@ -61,7 +86,7 @@ nav a {
 nav a:first-of-type {
   border: 0;
 }
-*/
+
 @media (min-width: 1024px) {
   header {
     display: flex;
@@ -78,7 +103,7 @@ nav a:first-of-type {
     place-items: flex-start;
     flex-wrap: wrap;
   }
-/*
+
   nav {
     text-align: left;
     margin-left: -1rem;
@@ -87,6 +112,6 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
-  */
 }
+*/
 </style>

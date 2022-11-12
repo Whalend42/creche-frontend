@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { ref } from 'vue'
+    import { ref, onUpdated } from 'vue'
 
     const props = defineProps<{
         text: string
@@ -16,17 +16,16 @@
     const editable = () => {
         state.value = 'editable'
         console.log("editable")
+        //$refs.
     }
+    onUpdated(() => {
+        // text content should be the same as current `count.value`
+        //document.getElementById('someId').focus()
+        //console.log(document.getElementById('someId').textContent)
+    })
 </script>
 
 <template>
-    <!--<input
-        class=""
-        v-if="state === 'editable'" v-model="text"
-        @keyup.enter="saved"
-        @blur="saved"
-        @focusout="saved"/>-->
-
     <label
         class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label"
         v-if="state === 'editable'"
@@ -37,7 +36,7 @@
             <span class="mdc-notched-outline__leading"></span>
             <span class="mdc-notched-outline__trailing"></span>
         </span>
-        <input class="mdc-text-field__input" type="text" aria-label="Label" v-model="text">
+        <input id="someId" class="mdc-text-field__input" type="text" aria-label="Label" v-model="text">
     </label>
 
     <div

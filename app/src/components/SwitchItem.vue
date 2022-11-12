@@ -33,19 +33,19 @@
 <style src="@vueform/toggle/themes/default.css"></style>
 
 <template>
-    <td class="mdc-data-table__cell mdc-data-table__cell--numeric">{{props.sw.index}}</td>
-    <td class="mdc-data-table__cell"> <FreezabeInputItem v-model:text="alias"/> </td>
-    <td class="mdc-data-table__cell centered">
+    <td>{{props.sw.index}}</td>
+    <td> <FreezabeInputItem v-model:text="alias"/> </td>
+    <td>
         <i class="fas fa-lightbulb" :class="{on: props.sw.isOn}"></i>
     </td>
-    <td class="mdc-data-table__cell centered">
+    <td>
         <Toggle
             v-model="props.sw.isInhibited"
             @change="onChangeInhibition(sw)"
             on-label="on"
             off-label="Off" />
     </td>
-    <td class="mdc-data-table__cell centered">
+    <td>
         <Toggle
             v-model="props.sw.isOn"
             :disabled="!props.sw.isInhibited"

@@ -82,24 +82,19 @@
 </script>
 
 <template>
-    <main>
-        <SwitchesItem
-            :switches=switches
-            @change-inhibition="onChangeInhibition"
-            @change-state="onChangeState" />
 
-        <aside v-if="!isConnected" class="mdc-snackbar">
-            <div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
-                <div class="mdc-snackbar__label" aria-atomic="false">
-                    Can't send photo. Retry in 5 seconds.
-                </div>
-                <div class="mdc-snackbar__actions" aria-atomic="true">
-                    <button type="button" class="mdc-button mdc-snackbar__action">
-                        <div class="mdc-button__ripple"></div>
-                        <span class="mdc-button__label">Retry</span>
-                    </button>
-                </div>
-            </div>
-        </aside>
-    </main>
+<v-alert
+    v-if="!isConnected"
+    icon="mdi-flash"
+    title="Hors ligne"
+    type="error">
+    Impossible d'établire la connexion avec le serveur
+</v-alert>
+
+<v-card height="50px"></v-card>
+
+<SwitchesItem
+    :switches=switches
+    @change-inhibition="onChangeInhibition"
+    @change-state="onChangeState" />
 </template>
