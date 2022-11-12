@@ -34,7 +34,8 @@ function changeTheme() {
   </header>
 -->
 
-  <v-app>
+  <v-app
+    :theme=theme>
     <v-app-bar
       title="Gestion de la crèche">
       <v-spacer></v-spacer>
@@ -44,7 +45,9 @@ function changeTheme() {
       >Toggle Theme</v-btn>
     </v-app-bar>
     <v-main>
-      <RouterView />
+        <v-container>
+            <RouterView />
+        </v-container>
     </v-main>
   </v-app>
 

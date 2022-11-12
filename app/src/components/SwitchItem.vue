@@ -2,7 +2,6 @@
     //import { reactive } from 'vue'
     import FreezabeInputItem from "./FreezabeInputItem.vue";
     import type Switch from '@/types/Switch'
-    import Toggle from '@vueform/toggle'
     import { ref } from 'vue'
     //const state = reactive({value: true})
 
@@ -30,7 +29,6 @@
         }
     }
 </script>
-<style src="@vueform/toggle/themes/default.css"></style>
 
 <template>
     <td>{{props.sw.index}}</td>
@@ -39,19 +37,21 @@
         <i class="fas fa-lightbulb" :class="{on: props.sw.isOn}"></i>
     </td>
     <td>
-        <Toggle
+        <v-switch
             v-model="props.sw.isInhibited"
-            @change="onChangeInhibition(sw)"
-            on-label="on"
-            off-label="Off" />
+            @click:append="onChangeInhibition(sw)"
+            :label="props.sw.isInhibited ? 'on' : 'off'"
+            inset
+            color="primary"/>
     </td>
     <td>
-        <Toggle
+        <v-switch
             v-model="props.sw.isOn"
             :disabled="!props.sw.isInhibited"
-            @change="onChangeState(sw)"
-            on-label="on"
-            off-label="Off" />
+            @click:append="onChangeState(sw)"
+            :label="props.sw.isOn ? 'on' : 'off'"
+            inset
+            color="primary" />
     </td>
 </template>
 
