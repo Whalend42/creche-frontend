@@ -19,7 +19,7 @@
     }
     const editable = () => {
         state.value = 'editable'
-        inputElement.value?.focus()
+        //inputElement.value?.focus()
         console.log("editable")
     }
 </script>

@@ -54,7 +54,7 @@
     <td>
         <v-switch
             v-model="props.sw.isInhibited"
-            @click:append="onChangeInhibition(sw)"
+            @click="onChangeInhibition(sw)"
             :label="props.sw.isInhibited ? 'on' : 'off'"
             inset
             color="primary"/>
@@ -63,7 +63,7 @@
         <v-switch
             v-model="props.sw.isOn"
             :disabled="!props.sw.isInhibited"
-            @click:append="onChangeState(sw)"
+            @click="onChangeState(sw)"
             :label="props.sw.isOn ? 'on' : 'off'"
             inset
             color="primary" />
