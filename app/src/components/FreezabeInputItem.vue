@@ -8,7 +8,7 @@
     let state = ref('editable')
     const text = ref(props.text)
     const defaultText = text.value
-    const inputElement = ref(null)
+    const inputElement = ref<HTMLFormElement|null>(null)
 
     const saved = () => {
         state.value = "saved"
@@ -19,7 +19,11 @@
     }
     const editable = () => {
         state.value = 'editable'
-        //inputElement.value?.focus()
+        // wait for the text-field to become enabled again
+        // then set focus to it
+        setTimeout(() => {
+            inputElement.value?.focus()
+        }, 2, inputElement)
         console.log("editable")
     }
 </script>
