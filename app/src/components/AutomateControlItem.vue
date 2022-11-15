@@ -9,6 +9,7 @@
             time: null
         } as AutomateStatus
     )
+    const file = ref<File | null>();
 
     const toggle = reactive({value: null})
 
@@ -87,25 +88,55 @@
             console.log("stop")
             emit('stop')
             automateStatus.lastAction = 'stop'
+            toggle.value = null
         }
     }
 
-    const load = () => {
+    const load = ($event: Event) => {
         if (
             automateStatus.lastAction === 'stop' ||
+            automateStatus.lastAction === 'load' ||
             automateStatus.lastAction === null
         ) {
             console.log("load")
-            automateStatus.track = "salut"
-            emit('load', automateStatus.track)
-            automateStatus.lastAction = 'load'
+            const target = $event.target as HTMLInputElement;
+            if (target && target.files) {
+                file.value = target.files[0];
+                automateStatus.track = file.value.name
+                emit('load', automateStatus.track)
+                automateStatus.lastAction = 'load'
+                console.log(automateStatus.track)
+            }
         }
     }
+
+    const unload = () => {
+        automateStatus.lastAction = null
+        automateStatus.track = null
+        toggle.value = null
+    }
+
 
 </script>
 
 
 <template>
+    <v-row>
+        <v-col cols="3">
+            Partition
+        </v-col>
+    </v-row>
+    <v-row>
+        <v-col cols="4">
+            <v-file-input
+                :disabled="!isLoadable"
+                density="compact"
+                label="File input"
+                @change="load($event)"
+                @click:clear="unload">
+            </v-file-input>
+        </v-col>
+    </v-row>
     <v-row>
         <v-col cols="12">
         Currently playing: {{automateStatus.track}}<br/>
@@ -138,11 +169,6 @@
                     icon="mdi-stop"
                     value="stop"
                     @click="stop"></v-btn>
-                <v-btn
-                    :disabled="!isLoadable"
-                    icon="mdi-eject"
-                    value="eject"
-                    @click="load"></v-btn>
             </v-btn-toggle>
         </v-col>
     </v-row>
