@@ -44,7 +44,7 @@
         (e: 'play'): void
         (e: 'pause'): void
         (e: 'stop'): void
-        (e: 'load', value: string): void
+        (e: 'load', fileData: string | ArrayBuffer): void
     }>()
 
     // trigger
@@ -101,11 +101,16 @@
             console.log("load")
             const target = $event.target as HTMLInputElement;
             if (target && target.files) {
-                file.value = target.files[0];
-                automateStatus.track = file.value.name
-                emit('load', automateStatus.track)
-                automateStatus.lastAction = 'load'
-                console.log(automateStatus.track)
+                let r = new FileReader();
+                r.onload = (
+                    (fileDesc) => {
+                        return (e) => {
+                            if (e.target !== null && e.target.result !== null) {
+                                setAndSendFile(fileDesc, e.target.result)
+                            }
+                        };
+                    })(target.files[0]);
+                r.readAsText(target.files[0]);
             }
         }
     }
@@ -114,6 +119,14 @@
         automateStatus.lastAction = null
         automateStatus.track = null
         toggle.value = null
+    }
+
+    const setAndSendFile = (fileDesc: File, fileContent: string | ArrayBuffer) => {
+        emit('load', fileContent)
+        file.value = fileDesc;
+        automateStatus.track = file.value.name
+        automateStatus.lastAction = 'load'
+        console.log(automateStatus.track)
     }
 
 

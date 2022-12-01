@@ -40,7 +40,30 @@
       switches.value = resp
     }
 
-    // trigger
+    // trigger of automate
+
+    const onPlay = () => {
+        console.log("play")
+    }
+    const onPause = () => {
+        console.log("pause")
+    }
+    const onStop = () => {
+        console.log("stop")
+    }
+    const onLoad = (fileData: string | ArrayBuffer) => {
+        console.log("load")
+        const cmd = {
+            action: "loadPlanning",
+            planning: fileData
+        }
+        console.log(cmd)
+        if (isConnected) {
+            connection.send(JSON.stringify(cmd))
+        }
+    }
+
+    // trigger of controlls
 
     const onChangeInhibition = (sw: Switch) => {
         console.log("in parent, inhibition: "+sw.status.isInhibited)
@@ -122,7 +145,11 @@
                 subtitle="Pour charger et jouer des partitions"
                 variant="tonal">
                 <v-card-item>
-                    <AutomateControlItem>
+                    <AutomateControlItem
+                        @play="onPlay"
+                        @pause="onPause"
+                        @load="onLoad"
+                        @stop="onStop">
                     </AutomateControlItem>
                 </v-card-item>
             </v-card>
