@@ -8,13 +8,19 @@
     const defaultSwitches = [
         {
             index: 0,
-            isOn: true,
-            isInhibited: false
+            status:
+            {
+                isOn: true,
+                isInhibited: false
+            }
         } as Switch,
         {
             index: 1,
-            isOn: false,
-            isInhibited: true
+            status:
+            {
+                isOn: false,
+                isInhibited: true
+            }
         } as Switch
     ]
 
@@ -37,17 +43,28 @@
     // trigger
 
     const onChangeInhibition = (sw: Switch) => {
-        console.log("in parent, inhibition: "+sw.isInhibited)
+        console.log("in parent, inhibition: "+sw.status.isInhibited)
+        const cmd = {
+            action: "inhibit",
+            index: sw.index
+        }
+        if (sw.status.isInhibited) {
+            cmd.action = "release"
+        }
+        console.log(cmd)
+        if (isConnected) {
+            connection.send(JSON.stringify(cmd))
+        }
     }
 
     const onChangeState = (sw: Switch) => {
-        console.log("in parent, state: "+sw.isOn)
+        console.log("in parent, state: "+sw.status.isOn)
         const cmd = {
-            action: "off",
+            action: "on",
             index: sw.index
         }
-        if (sw.isOn) {
-            cmd.action = "on"
+        if (sw.status.isOn) {
+            cmd.action = "off"
         }
         console.log(cmd)
         if (isConnected) {

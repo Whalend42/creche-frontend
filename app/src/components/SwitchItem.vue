@@ -11,7 +11,7 @@
     let label = ref(String(props.sw.index))
 
     const lightBubleColor = computed(() => {
-        return props.sw.isOn ? 'yellow-accent-2' : 'grey-lighten-1'
+        return props.sw.status.isOn ? 'yellow-accent-2' : 'grey-lighten-1'
     })
 
     const emit = defineEmits<{
@@ -20,14 +20,15 @@
     }>()
 
     const onChangeInhibition = (sw: Switch) => {
-        console.log("in switch, inhibition: "+sw.isInhibited)
+        console.log("in switch, inhibition: "+sw.status.isInhibited)
         emit('change-inhibition', sw)
     }
 
     const onChangeState = (sw: Switch) => {
-        console.log("in switch, state: "+sw.isOn)
+        console.log(sw)
+        console.log("in switch, state: "+sw.status.isOn)
         // user can change the value of a switch only if it is "inhibited". i.e. if the automation cannot modify it
-        if (sw.isInhibited) {
+        if (sw.status.isInhibited) {
             emit('change-state', sw)
         }
     }
@@ -41,11 +42,11 @@
     <td>
         <v-btn
             variant="outlined"
-            size="large"
+            size="small"
             icon
             color="grey-lighten-1">
             <v-icon
-                size="x-large"
+                size="small"
                 icon="mdi-lightbulb"
                 :color="lightBubleColor">
             </v-icon>
@@ -53,18 +54,18 @@
     </td>
     <td>
         <v-switch
-            v-model="props.sw.isInhibited"
+            v-model="props.sw.status.isInhibited"
             @click="onChangeInhibition(sw)"
-            :label="props.sw.isInhibited ? 'on' : 'off'"
+            :label="props.sw.status.isInhibited ? 'on' : 'off'"
             inset
             color="primary"/>
     </td>
     <td>
         <v-switch
-            v-model="props.sw.isOn"
-            :disabled="!props.sw.isInhibited"
+            v-model="props.sw.status.isOn"
+            :disabled="!props.sw.status.isInhibited"
             @click="onChangeState(sw)"
-            :label="props.sw.isOn ? 'on' : 'off'"
+            :label="props.sw.status.isOn ? 'on' : 'off'"
             inset
             color="primary" />
     </td>

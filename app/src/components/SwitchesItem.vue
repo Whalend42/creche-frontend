@@ -29,12 +29,12 @@
     // trigger
 
     const onChangeInhibition = (sw: Switch) => {
-        console.log("in switchES, inhibition: "+sw.isInhibited)
+        console.log("in switchES, inhibition: "+sw.status.isInhibited)
         emit('change-inhibition', sw) // simply pass on the event
     }
 
     const onChangeState = (sw: Switch) => {
-        console.log("in switchES, state: "+sw.isOn)
+        console.log("in switchES, state: "+sw.status.isOn)
         emit('change-state', sw) // simply pass on the event
     }
 
